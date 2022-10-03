@@ -70,6 +70,27 @@ app.get('/getSummoner/:summonerId/champion/:champKey', (req, res) => {
     // res.json([test])
 })
 
+app.get('/getMasteries/:summonerId', (req, res) => {
+
+    res.set('Access-Control-Allow-Origin', '*');
+    const test = axios.get(`https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${req.params.summonerId}?api_key=${api_key}`)
+        .then(function (response) {
+            res.send(response.data)
+
+        })
+        .catch(function (error) {
+            // handle error
+            console.log('No mastery for this champion');
+        })
+        .then(function () {
+            // always executed
+
+        });
+
+    // console.log(test)
+    // res.json([test])
+})
+
 app.listen(8080, () => {
     console.log('listening on port 8080')
 })
