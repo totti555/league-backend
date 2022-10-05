@@ -80,6 +80,7 @@ app.get('/getMasteries/:summonerId', (req, res) => {
         })
         .catch(function (error) {
             // handle error
+            console.log(error);
             console.log('No mastery for this champion');
         })
         .then(function () {
@@ -89,6 +90,42 @@ app.get('/getMasteries/:summonerId', (req, res) => {
 
     // console.log(test)
     // res.json([test])
+})
+
+app.get('/summoner/:puuid/matches', (req, res) => {
+
+    res.set('Access-Control-Allow-Origin', '*');
+    let count = 20;
+    const test = axios.get(`https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/${req.params.puuid}/ids?start=0&count=${count}&api_key=${api_key}`)
+        .then(function (response) {
+            res.send(response.data)
+
+        })
+        .catch(function (error) {
+            console.log('No matches found');
+        })
+        .then(function () {
+            // always executed
+
+        });
+})
+
+
+app.get('/summoner/matches/:matchId', (req, res) => {
+
+    res.set('Access-Control-Allow-Origin', '*');
+    const test = axios.get(`https://europe.api.riotgames.com/lol/match/v5/matches/${req.params.matchId}?api_key=${api_key}`)
+        .then(function (response) {
+            res.send(response.data)
+
+        })
+        .catch(function (error) {
+            console.log('No matches found');
+        })
+        .then(function () {
+            // always executed
+
+        });
 })
 
 app.listen(8080, () => {
