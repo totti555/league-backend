@@ -128,6 +128,23 @@ app.get('/summoner/matches/:matchId', (req, res) => {
         });
 })
 
+app.get('/summoner/:summonerId/rank', (req, res) => {
+
+    res.set('Access-Control-Allow-Origin', '*');
+    const test = axios.get(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${req.params.summonerId}?api_key=${api_key}`)
+        .then(function (response) {
+            res.send(response.data)
+
+        })
+        .catch(function (error) {
+            console.log('No rank found');
+        })
+        .then(function () {
+            // always executed
+
+        });
+})
+
 app.listen(8080, () => {
     console.log('listening on port 8080')
 })
